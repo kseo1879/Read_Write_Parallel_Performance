@@ -22,8 +22,9 @@ make test1
 
 - This is the result of the following test.
 ```bash
+time ./dynamic 1
 Test Begins for ten percent write
-EXPECTED : 0
+EXPECTED : 50000005000000.000000
 OBTAINED : 50000005000000.000000
 Test Ends
 22.68user 4.33system 0:08.92elapsed 302%CPU
@@ -53,3 +54,26 @@ make test5 = 90% write, 10% read.
 ```bash
 make clean
 ```
+
+## Functions
+
+### 1.Multithreads and data size
+
+Most of the test you can simply change some macros to change the data size and the number of threads. 
+
+If you look at the src/dynamic_array.h header file, there is total three macros from line 9 to 11. 
+
+#define TESTSIZE (10000000.0)
+#define TESTSIZE_INT (10000000)
+#define N_THREADS (4)
+
+You can just test it by changing to data size and the number of threads here. 
+
+#### WARMING
+I haven't done some defensive coding when changing the macros so it must follow some rules.
+1. TESTSIZE and TESTSIZE_INT "MUST" be a equal number. TESTSIZE is a double version of TESTSIZE_INT
+
+2. THE N_THREADS must have a value so it can "DEVIDE" the TESTSIZE without having any leftovers. 
+
+### 2. OTHER FUNCTIONS>
+For detailed return values and the implementation of the functions, they are in the "src/dynamic_array.c" source file. You can read the comments of it's own individual behaviors. 

@@ -54,8 +54,6 @@ void dynamic_array_add(struct dynamic_array *ary, void *value) {
         ary->value_array = (void *)realloc(ary->value_array, (sizeof(void *) * ary->capacity));
     }
     
-
-
     //We add the value to the list.
     (ary->value_array)[ary->filled] = value;
     ary->filled++;
