@@ -64,8 +64,11 @@ Most of the test you can simply change some macros to change the data size and t
 If you look at the src/dynamic_array.h header file, there is total three macros from line 9 to 11. 
 
 #define TESTSIZE (10000000.0)
+
 #define TESTSIZE_INT (10000000)
+
 #define N_THREADS (4)
+
 
 You can just test it by changing to data size and the number of threads here. 
 
@@ -74,6 +77,7 @@ I haven't done some defensive coding when changing the macros so it must follow 
 1. TESTSIZE and TESTSIZE_INT "MUST" be a equal number. TESTSIZE is a double version of TESTSIZE_INT
 
 2. THE N_THREADS must have a value so it can "DEVIDE" the TESTSIZE without having any leftovers. 
+
 
 ### 2. OTHER FUNCTIONS>
 For detailed return values and the implementation of the functions, they are in the "src/dynamic_array.c" source file. You can read the comments of it's own individual behaviors. 
