@@ -85,7 +85,7 @@ void* dynamic_array_get(struct dynamic_array *ary, size_t index) {
     //other thread who will write but allow the ones that are trying to read. 
     pthread_rwlock_rdlock(&(ary->lock));
 
-    if(index < 0 || index >= (ary->filled)) {
+    if(index >= (ary->filled)) {
         perror("The index provided in get function is out of range\n");
         pthread_rwlock_unlock(&(ary->lock));
         return NULL;
@@ -118,7 +118,7 @@ void* dynamic_array_remove(struct dynamic_array *ary, size_t index) {
 
     pthread_rwlock_wrlock(&(ary->lock));
 
-    if(index < 0 || index >= (ary->filled)) {
+    if(index >= (ary->filled)) {
         perror("The index provided in remove function is out of range\n");
         pthread_rwlock_unlock(&(ary->lock));
         return NULL;
@@ -145,69 +145,10 @@ void dynamic_array_destory(struct dynamic_array *ary) {
         perror("Didn't provide the correct argument in destory function\n");
         return;
     }
+
     pthread_rwlock_destroy(&(ary->lock));
     free(ary->value_array);
     free(ary);
 
     return;
-}
-
-void *worker(void *arg) {
-
-    struct data *data = (struct data *)arg;
-
-    for(int i = (data->thread_index) * (TESTSIZE/N_THREADS);
-        i < ((data->thread_index + 1) * (TESTSIZE/N_THREADS)); i ++) {
-            dynamic_array_add(data->ary, &((data->data_array)[i]));
-    }
-
-    // for(int i = (data->thread_index) * (TESTSIZE/N_THREADS);
-    //     i < ((data->thread_index + 1) * (TESTSIZE/N_THREADS)); i ++) {
-    //         dynamic_array_get(data->ary, i);
-    // }
-
-    return NULL;
-}
-
-int main() {
-    printf("Test Begins\n");
-
-    struct dynamic_array *ary = dynamic_array_new(TESTSIZE);
-    
-    double data_array[1000000];
-
-    for(int i = 0; i < TESTSIZE; i++) {
-        data_array[i] = i + 1;
-    }
-
-    struct data *data = malloc(sizeof(struct data) * N_THREADS);
-    for(int i = 0; i < N_THREADS; i ++) {
-        data[i].ary = ary;
-        data[i].data_array = data_array;
-        data[i].thread_index = i;
-    }
-
-    pthread_t threads[4];
-    for(int i = 0; i < N_THREADS; i ++) {
-        pthread_create(threads + i, NULL, worker, data + i);
-    }
-
-    for(int i = 0; i < N_THREADS; i ++) {
-        pthread_join(threads[i], NULL);
-    }
-    printf("Test Begins\n");
-
-    double sum = 0;
-    for(int i = 0; i < TESTSIZE; i ++) {
-        double *a = (double *)dynamic_array_get(ary, i);
-        sum = sum + *a;
-    }
-
-    printf("EXPECTED : %f\n", (double)((TESTSIZE + 1) * (TESTSIZE/2)));
-    printf("OBTAINED : %f\n", sum);
-    
-    free(data);
-    dynamic_array_destory(ary);
-    printf("Test Ends\n");
-    return 0;
 }
