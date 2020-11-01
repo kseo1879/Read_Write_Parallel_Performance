@@ -1,10 +1,13 @@
 #ifndef DYNAMIC_H
 #define DYNAMIC_H
+#define _POSIX_C_SOURCE200112L
 #include <pthread.h>
 #include <stdio.h>
 #include <stdlib.h>
 
-#define TESTSIZE (1000000.0)
+//The test size and test size int has to be an equal number
+#define TESTSIZE (10000000.0)
+#define TESTSIZE_INT (10000000)
 #define N_THREADS (4)
 
 /**

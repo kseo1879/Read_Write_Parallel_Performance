@@ -1,6 +1,7 @@
 CC=gcc 
-CFLAGS=-Wall -Werror -std=gnu11 -fsanitize=address -pthread 
+CFLAGS=-fsanitize=address -Wall -Werror -pthread 
 TARGET=dynamic
+
 
 .PHONY: clean
 
