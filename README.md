@@ -36,10 +36,15 @@ It will also show how much time has ellapsed.
 ##### The other options are "make test2", "make test3"....."make test5".
 
 Each of the test corresponse to the persentage of read and write function. 
+
 make test1 = 10% write, 90% read.
+
 make test2 = 40% write, 60% read.
+
 make test3 = 50% write, 50% read.
+
 make test4 = 60% write, 40% read.
+
 make test5 = 90% write, 10% read.
 
 
